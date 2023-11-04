@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  rabbit: 
+    image: rabbitmq:3-management
+    ports:
+    - 15672:15672
+    - 5672:5672
+
+  postgres:
+    build:
+      context: ./postgres
+    environment:
+      POSTGRES_USER: yegor
+      POSTGRES_PASSWORD: yegor
+      POSTGRES_DB: testing
+    ports:
+      - 5432:5432

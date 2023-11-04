@@ -1,0 +1,35 @@
+rmq:
+  connection_string: amqp://guest:guest@localhost:5672
+  connection_timeout: 30s
+  heartbeat: 20s
+  max_channels: 345678
+  concurrency: 1
+  reconnect:
+    delay_start: 1s
+    delay_step: 2s
+    delay_stop: 30s
+  republish:
+    max_attempts: 10
+    delay_start: 500ms
+    delay_step: 500ms
+    delay_stop: 10s
+
+
+connector:
+  connection_string: postgres://yegor:yegor@localhost:5432/testing
+  replication_slot: rmq_connect
+  output_plugin: wal2json
+  table_filter: public.outbox
+  standby_timeout: 10s
+
+logging:
+  mode: development
+  level: info
+  encoding: console
+  file:
+    path: ./logs/logs.log
+    max_size: 500 #MB
+    max_backups: 3
+    max_age: 7 #days
+    write_buffer_size: 4096 #bytes
+    write_buffer_flush_interval: 2s
